@@ -51,8 +51,11 @@ bool SCore::GameInit()
 	if (pBackBuffer) pBackBuffer->Release();
 
 	m_Camera.CreateViewMatrix({ 0,0,-10 }, { 0,0,0 });
-	float fAspect = g_rtClient.right / (float)g_rtClient.bottom;
-	m_Camera.CreateProjMatrix(1, 1000, SBASIS_PI / 4.0f, fAspect);
+	//float fAspect = g_rtClient.right / (float)g_rtClient.bottom;
+	m_Camera.CreateOrthographic(800, 600, 1, 1000);
+	//m_Camera.CreateOrthographic(g_rtClient.right, g_rtClient.bottom,1, 100);
+	//D3DXMatrixOrthoLH(&m_Projection[1], iRectWidth * 2, iRectHeight * 2, 0.0f, 1000.0f);
+	//m_Camera.CreateProjMatrix(1, 1000, SBASIS_PI / 4.0f, fAspect);
 	m_Camera.Init();
 	m_pMainCamera = &m_Camera;
 
@@ -62,12 +65,12 @@ bool SCore::GameInit()
 	//m_Plane.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
 	//	L"../../data/shader/PS.txt", L"../../data/tileA.jpg");
 
-	if (!m_LineShape.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
-		L"../../data/shader/PS.txt",
-		L"../../data/tileA.jpg"))
-	{
-		return false;
-	}
+	//if (!m_LineShape.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
+	//	L"../../data/shader/PS.txt",
+	//	L"../../data/tileA.jpg"))
+	//{
+	//	return false;
+	//}
 	g_TexMgr.Init();
 
 	Init();
@@ -77,7 +80,7 @@ bool SCore::GameInit()
 }
 bool SCore::GameRelease()
 {
-	m_LineShape.Release();
+	//m_LineShape.Release();
 	//m_Skybox.Release();
 	//m_Plane.Release();
 	Release();
@@ -107,19 +110,19 @@ void    SCore::CameraFrame()
 {
 	if (g_Input.GetKey('W') == KEY_HOLD)
 	{
-		m_pMainCamera->UpMovement(1.0f);
+		m_pMainCamera->UpMovement(0.5f);
 	}
 	if (g_Input.GetKey('S') == KEY_HOLD)
 	{
-		m_pMainCamera->UpMovement(-1.0f);
+		m_pMainCamera->UpMovement(-0.5f);
 	}
 	if (g_Input.GetKey('A') == KEY_HOLD)
 	{
-		m_pMainCamera->RightMovement(-1.0f);
+		m_pMainCamera->RightMovement(-0.5f);
 	}
 	if (g_Input.GetKey('D') == KEY_HOLD)
 	{
-		m_pMainCamera->RightMovement(1.0f);
+		m_pMainCamera->RightMovement(0.5f);
 	}
 	if (g_Input.GetKey(VK_UP) == KEY_HOLD)
 	{
@@ -165,21 +168,21 @@ bool	SCore::PreRender()
 }
 bool	SCore::PostRender()
 {
-	m_LineShape.SetMatrix(NULL, &m_pMainCamera->m_matView,
-		&m_pMainCamera->m_matProj);
-	m_LineShape.Draw(g_pImmediateContext,
-		Vector3(0, 0, 0), Vector3(100, 0, 0), Vector4(1, 0, 0, 1));
-	m_LineShape.Draw(g_pImmediateContext,
-		Vector3(0, 0, 0), Vector3(0, 100, 0), Vector4(0, 1, 0, 1));
-	m_LineShape.Draw(g_pImmediateContext,
-		Vector3(0, 0, 0), Vector3(0, 0, 100), Vector4(0, 0, 1, 1));
+	//m_LineShape.SetMatrix(NULL, &m_pMainCamera->m_matView,
+	//	&m_pMainCamera->m_matProj);
+	//m_LineShape.Draw(g_pImmediateContext,
+	//	Vector3(0, 0, 0), Vector3(100, 0, 0), Vector4(1, 0, 0, 1));
+	//m_LineShape.Draw(g_pImmediateContext,
+	//	Vector3(0, 0, 0), Vector3(0, 100, 0), Vector4(0, 1, 0, 1));
+	//m_LineShape.Draw(g_pImmediateContext,
+	//	Vector3(0, 0, 0), Vector3(0, 0, 100), Vector4(0, 0, 1, 1));
 
 	g_Timer.Render();
 	g_Input.Render();
 	//g_SoundMgr.Render();
 
-	g_dxWrite.Render();
-	g_dxWrite.Draw(0, 0, g_Timer.m_szBuffer);
+	//g_dxWrite.Render();
+	//g_dxWrite.Draw(0, 0, g_Timer.m_szBuffer);
 	SDevice::PostRender();
 	return true;
 }

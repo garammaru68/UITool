@@ -9,7 +9,7 @@
 
 #include "resource.h"       // 주 기호입니다.
 #include "Sample.h"
-
+#include "UIToolPane.h"
 // CUIToolApp:
 // 이 클래스의 구현에 대해서는 UITool.cpp을(를) 참조하세요.
 //

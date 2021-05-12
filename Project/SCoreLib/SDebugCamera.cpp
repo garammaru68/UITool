@@ -31,14 +31,14 @@ bool SDebugCamera::Frame()
 	HWND hWnd = WindowFromPoint(point);
 	ScreenToClient(g_hWnd, &point);
 
-	if (hWnd == g_hWnd && g_Input.GetKey(VK_LBUTTON))
-	{
-		float fAngleX = (point.x - m_ptPrePosition.x);
-		float fAngleY = (point.y - m_ptPrePosition.y);
-		m_vDirValue.y += XMConvertToRadians(fAngleX / 2.0f);
-		m_vDirValue.x += XMConvertToRadians(fAngleY / 2.0f);
-		//SBASIS_CORE_LIB::OutputDebug("%10.4f*10.4f\n",fAngleX,fAngleY);
-	}
+	//if (hWnd == g_hWnd && g_Input.GetKey(VK_LBUTTON))
+	//{
+	//	float fAngleX = (point.x - m_ptPrePosition.x);
+	//	float fAngleY = (point.y - m_ptPrePosition.y);
+	//	m_vDirValue.y += XMConvertToRadians(fAngleX / 2.0f);
+	//	m_vDirValue.x += XMConvertToRadians(fAngleY / 2.0f);
+	//	//SBASIS_CORE_LIB::OutputDebug("%10.4f*10.4f\n",fAngleX,fAngleY);
+	//}
 	m_ptPrePosition = point;
 
 	Update(m_vDirValue);

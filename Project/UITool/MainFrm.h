@@ -1,8 +1,5 @@
-﻿
-// MainFrm.h: CMainFrame 클래스의 인터페이스
-//
-
-#pragma once
+﻿#pragma once
+#include "UIToolPane.h"
 
 class CMainFrame : public CFrameWndEx
 {
@@ -13,7 +10,7 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
-
+	UIToolPane		m_wndUIToolPane;
 // 작업입니다.
 public:
 
