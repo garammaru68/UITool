@@ -17,6 +17,15 @@ public:
 	virtual ~SShapeBox();
 };
 
+class SShapeUI : public SShape
+{
+public:
+	virtual bool	CreateVertexData()override;
+	virtual bool	CreateIndexData()override;
+public:
+	SShapeUI();
+	virtual ~SShapeUI();
+};
 class SShapePlane : public SShape
 {
 public:

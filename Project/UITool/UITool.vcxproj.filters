@@ -54,6 +54,9 @@
     <ClInclude Include="UIToolForm.h">
       <Filter>Panel</Filter>
     </ClInclude>
+    <ClInclude Include="UIObject.h">
+      <Filter>SCore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UITool.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="UIToolForm.cpp">
       <Filter>Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>SCore</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

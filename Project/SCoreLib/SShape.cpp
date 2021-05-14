@@ -67,6 +67,71 @@ SShapeBox::~SShapeBox()
 
 }
 
+bool SShapeUI::CreateVertexData()
+{
+	//	rt1	rt2	rt3
+	// rt4	rt5	rt6
+	// rt7	rt8	rt9
+	m_VertexList.resize(36);
+	// rt1
+	m_VertexList[0] = PNCT_VERTEX(Vector3(-1.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[1] = PNCT_VERTEX(Vector3(-0.3f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[2] = PNCT_VERTEX(Vector3(-0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[3] = PNCT_VERTEX(Vector3(-1.0f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt2
+	m_VertexList[4] = PNCT_VERTEX(Vector3(-0.3f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[5] = PNCT_VERTEX(Vector3( 0.3f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[6] = PNCT_VERTEX(Vector3( 0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[7] = PNCT_VERTEX(Vector3(-0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt3
+	m_VertexList[8] = PNCT_VERTEX(Vector3( 0.3f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[9] = PNCT_VERTEX(Vector3( 1.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[10] = PNCT_VERTEX(Vector3( 1.0f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[11] = PNCT_VERTEX(Vector3( 0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt4
+	m_VertexList[12] = PNCT_VERTEX(Vector3(-1.0f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[13] = PNCT_VERTEX(Vector3(-0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[14] = PNCT_VERTEX(Vector3(-0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[15] = PNCT_VERTEX(Vector3(-1.0f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt5
+	m_VertexList[16] = PNCT_VERTEX(Vector3(-0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[17] = PNCT_VERTEX(Vector3( 0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[18] = PNCT_VERTEX(Vector3( 0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[19] = PNCT_VERTEX(Vector3(-0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt6
+	m_VertexList[20] = PNCT_VERTEX(Vector3( 0.3f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[21] = PNCT_VERTEX(Vector3( 1.0f, 0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[22] = PNCT_VERTEX(Vector3( 1.0f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[23] = PNCT_VERTEX(Vector3( 0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt7
+	m_VertexList[24] = PNCT_VERTEX(Vector3(-1.0f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[25] = PNCT_VERTEX(Vector3(-0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[26] = PNCT_VERTEX(Vector3(-0.3f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[27] = PNCT_VERTEX(Vector3(-1.0f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt8
+	m_VertexList[28] = PNCT_VERTEX(Vector3(-0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[29] = PNCT_VERTEX(Vector3( 0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[30] = PNCT_VERTEX(Vector3( 0.3f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[31] = PNCT_VERTEX(Vector3(-0.3f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	// rt9
+	m_VertexList[32] = PNCT_VERTEX(Vector3( 0.3f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f));
+	m_VertexList[33] = PNCT_VERTEX(Vector3( 1.0f,-0.3f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f));
+	m_VertexList[34] = PNCT_VERTEX(Vector3( 1.0f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f));
+	m_VertexList[35] = PNCT_VERTEX(Vector3( 0.3f,-1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f));
+	
+	return true;
+}
+bool SShapeUI::CreateIndexData()
+{
+	return true;
+}
+SShapeUI::SShapeUI()
+{
+}
+SShapeUI::~SShapeUI()
+{
+}
+
 bool SShapePlane::CreateVertexData()
 {
 	// Vertex Data
@@ -90,11 +155,9 @@ bool SShapePlane::CreateIndexData()
 	m_IndexList[iIndex++] = 3;
 	return true;
 }
-
 SShapePlane::SShapePlane()
 {
 }
-
 SShapePlane::~SShapePlane()
 {
 }
