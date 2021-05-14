@@ -108,22 +108,22 @@ bool	SCore::GameFrame()
 }
 void    SCore::CameraFrame()
 {
-	if (g_Input.GetKey('W') == KEY_HOLD)
-	{
-		m_pMainCamera->UpMovement(0.5f);
-	}
-	if (g_Input.GetKey('S') == KEY_HOLD)
-	{
-		m_pMainCamera->UpMovement(-0.5f);
-	}
-	if (g_Input.GetKey('A') == KEY_HOLD)
-	{
-		m_pMainCamera->RightMovement(-0.5f);
-	}
-	if (g_Input.GetKey('D') == KEY_HOLD)
-	{
-		m_pMainCamera->RightMovement(0.5f);
-	}
+	//if (g_Input.GetKey('W') == KEY_HOLD)
+	//{
+	//	m_pMainCamera->UpMovement(0.5f);
+	//}
+	//if (g_Input.GetKey('S') == KEY_HOLD)
+	//{
+	//	m_pMainCamera->UpMovement(-0.5f);
+	//}
+	//if (g_Input.GetKey('A') == KEY_HOLD)
+	//{
+	//	m_pMainCamera->RightMovement(-0.5f);
+	//}
+	//if (g_Input.GetKey('D') == KEY_HOLD)
+	//{
+	//	m_pMainCamera->RightMovement(0.5f);
+	//}
 	if (g_Input.GetKey(VK_UP) == KEY_HOLD)
 	{
 		m_pMainCamera->FrontMovement(1.0f);

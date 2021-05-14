@@ -4,27 +4,25 @@
 class UIObject
 {
 public:
-	//SShapePlane m_PlaneUI;
 	SShapeUI m_PlaneUI;
+public:
+	Matrix	m_matUiWorld;
+	Matrix	m_matUiView;
+	Matrix	m_matUiProj;
 
+	Vector2	m_vUIScale;
+	Vector2	m_vUIRotate;
+	Vector2	m_vUIPos;
+
+	RECT		m_rt;
 public:
-	Matrix m_matUI;
-	Matrix m_matView;
-	Matrix m_matProj;
-public:
-	bool	Update(Matrix View, Matrix Proj, POINT cursor);
+	void	Move(float x, float y);
+	void	Scale(float x, float y);
+	bool	Update();
+
 public:
 	bool Init();
 	bool Frame();
 	bool Render();
 	bool Release();
-};
-
-class UIForm : public UIObject
-{
-public:
-	std::vector<SShapePlane*> m_pUIFormList;
-public:
-	//SShapePlane* CreateUIForm(Matrix View, Matrix Proj, POINT cursor, STexture* texture);
-	
 };
