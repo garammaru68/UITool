@@ -6,14 +6,20 @@
 class Sample : public SCore
 {
 public:
-	bool m_bRS;
+	bool	m_bRS;
+	bool	m_bClickState;
+	POINT sCursorPos;
+	POINT eCursorPos;
 	STexture*					m_Texture;
 	UIObject*					m_pSelectUI;
 	std::vector<UIObject*>	m_vUIList;
-	bool							bButtonState;
+
 public:
-	UIObject* CreateUI(POINT cursor, STexture* texture);
-	UIObject* SelectUI();
+	UIObject*	CreateUI(POINT cursor, STexture* texture);
+	UIObject*	SelectUI();
+	POINT			ClickDown();
+	POINT			ClickUp();
+	POINT			MoveDistance();
 
 public:
 	bool Init() override;

@@ -3,10 +3,6 @@
 
 bool UIObject::Init()
 {
-	m_vUIPos.x = 0;
-	m_vUIPos.y = 0;
-	m_vUIScale.x = 100;
-	m_vUIScale.y = 100;
 	return true;
 }
 bool UIObject::Frame()
@@ -25,7 +21,6 @@ void UIObject::Move(float x, float y)
 {
 	m_vUIPos.x += x;
 	m_vUIPos.y += y;
-
 }
 void UIObject::Scale(float x, float y)
 {
@@ -34,8 +29,10 @@ void UIObject::Scale(float x, float y)
 }
 bool UIObject::Update()
 {
-	m_PlaneUI.m_matWorld._41 = m_PlaneUI.m_matWorld._41 + m_vUIPos.x;
-	m_PlaneUI.m_matWorld._42 = m_PlaneUI.m_matWorld._42 + m_vUIPos.y;
+	m_PlaneUI.m_matWorld._41 = m_PlaneUI.m_vPos.x + m_vUIPos.x;
+	m_PlaneUI.m_matWorld._42 = m_PlaneUI.m_vPos.y + m_vUIPos.y;
+	m_PlaneUI.m_matWorld._43 = m_PlaneUI.m_vPos.z + m_vUIPos.z;
+	m_rt.left = 
 	m_PlaneUI.m_matWorld._11 = m_vUIScale.x;
 	m_PlaneUI.m_matWorld._22 = m_vUIScale.y;
 

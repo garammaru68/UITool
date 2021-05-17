@@ -274,7 +274,7 @@ SObject::SObject()
 	m_bDead = false;
 	m_ptDirection.x = 0.0f;
 	m_ptDirection.y = 0.0f;
-	m_fSpeed = 50.0f;
+	m_fSpeed = 100.0f;
 	m_bColorKey = false;
 	m_dwColorKey = RGB(255, 255, 255);
 	m_bSelect = false;

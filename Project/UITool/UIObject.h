@@ -12,7 +12,9 @@ public:
 
 	Vector2	m_vUIScale;
 	Vector2	m_vUIRotate;
-	Vector2	m_vUIPos;
+	Vector3	m_vUIPos;
+
+	float		m_fSpeed = 100.0f;
 
 	RECT		m_rt;
 public:
