@@ -32,9 +32,15 @@ bool UIObject::Update()
 	m_PlaneUI.m_matWorld._41 = m_PlaneUI.m_vPos.x + m_vUIPos.x;
 	m_PlaneUI.m_matWorld._42 = m_PlaneUI.m_vPos.y + m_vUIPos.y;
 	m_PlaneUI.m_matWorld._43 = m_PlaneUI.m_vPos.z + m_vUIPos.z;
-	m_rt.left = 
+	//m_rt.left = 
 	m_PlaneUI.m_matWorld._11 = m_vUIScale.x;
 	m_PlaneUI.m_matWorld._22 = m_vUIScale.y;
+
+	//////////////////////// 이부분 추가했음 ( 도형 선택 안됨 ) /////////////////////
+	m_rt.left = m_PlaneUI.m_vPos.x + m_vUIPos.x - m_vUIScale.x / 2;
+	m_rt.top = m_PlaneUI.m_vPos.y + m_vUIPos.y - m_vUIScale.y / 2;
+	m_rt.right = m_PlaneUI.m_vPos.x + m_vUIPos.x + m_vUIScale.x / 2;
+	m_rt.bottom = m_PlaneUI.m_vPos.y + m_vUIPos.y + m_vUIScale.y / 2;
 
 	return true;
 }
