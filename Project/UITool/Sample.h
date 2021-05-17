@@ -10,6 +10,7 @@ public:
 	STexture*					m_Texture;
 	UIObject*					m_pSelectUI;
 	std::vector<UIObject*>	m_vUIList;
+	bool							bButtonState;
 public:
 	UIObject* CreateUI(POINT cursor, STexture* texture);
 	UIObject* SelectUI();

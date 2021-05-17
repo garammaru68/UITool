@@ -1,0 +1,8 @@
+<Save>
+DirectXTex
+Metadata - 원본에 대한 정보
+SaveToDDSMemory
+ScratchImage 사용 - Input,output
+CaptureTexture
+SaveToDDSFile - 원본과 저장하기위한 텍스쳐
+TK에서 지정안하고 Texture에서 지정

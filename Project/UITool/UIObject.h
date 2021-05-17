@@ -19,6 +19,8 @@ public:
 	void	Move(float x, float y);
 	void	Scale(float x, float y);
 	bool	Update();
+	bool	matUpdate();
+	bool	Save();
 
 public:
 	bool Init();
