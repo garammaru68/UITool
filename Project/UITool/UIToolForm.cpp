@@ -45,6 +45,7 @@ void UIToolForm::OnInitialUpdate()
 
 	m_TextureList.InsertString(0, L"grass_2.jpg");
 	m_TextureList.InsertString(1, L"002.jpg");
+	m_TextureList.InsertString(2, L"main_start_nor.png");
 	m_TextureList.SetCurSel(0);
 
 }
@@ -79,6 +80,8 @@ void UIToolForm::TextureFileList()
 
 void UIToolForm::SelectTextureOK()
 {
-	UpdateData(TRUE);
+	UpdateData(FALSE);
+	CUIToolApp* pApp = (CUIToolApp*)AfxGetApp();
+	pApp->m_Sample.m_ChangeTexture = m_Texture;
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
