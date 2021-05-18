@@ -22,6 +22,7 @@ bool Sample::Frame()
 
 	UIObject* pSelect = SelectUI();
 
+	// 선택이 바뀌는 과정에서 중복 가능성
 	//if (pSelect != NULL)
 	if (pSelect != NULL && m_pSelectUI != pSelect)
 	{
@@ -65,7 +66,8 @@ bool Sample::Frame()
 	{
 		if (m_pSelectUI)
 		{
-			Delete(m_pSelectUI);
+			Release();
+			//Delete(m_pSelectUI);
 		}
 	}
 	// UI 마우스 이동
@@ -106,7 +108,6 @@ bool Sample::Frame()
 				Vector2 v1;
 				v1.x = (((2.0f * cursor.x) / g_rtClient.right) - 1) / matProj._11;
 				v1.y = -(((2.0f * cursor.y) / g_rtClient.bottom) - 1) / matProj._22;
-
 				m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x;
 				m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y;
 				//m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x + vUiPos.x;
@@ -114,10 +115,10 @@ bool Sample::Frame()
 				m_pSelectUI->m_PlaneUI.m_matWorld._41 = m_pSelectUI->m_PlaneUI.m_vPos.x;
 				m_pSelectUI->m_PlaneUI.m_matWorld._42 = m_pSelectUI->m_PlaneUI.m_vPos.y;
 
-				m_pSelectUI->m_rt.left = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x - m_pSelectUI->m_vUIScale.x / 2;
-				m_pSelectUI->m_rt.top = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y - m_pSelectUI->m_vUIScale.y / 2;
-				m_pSelectUI->m_rt.right = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x + m_pSelectUI->m_vUIScale.x / 2;
-				m_pSelectUI->m_rt.bottom = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y + m_pSelectUI->m_vUIScale.y / 2;
+				//m_pSelectUI->m_rt.left = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x - m_pSelectUI->m_vUIScale.x / 2;
+				//m_pSelectUI->m_rt.top = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y - m_pSelectUI->m_vUIScale.y / 2;
+				//m_pSelectUI->m_rt.right = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x + m_pSelectUI->m_vUIScale.x / 2;
+				//m_pSelectUI->m_rt.bottom = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y + m_pSelectUI->m_vUIScale.y / 2;
 			}
 			//Matrix matProj = m_pSelectUI->m_PlaneUI.m_matProj;
 			//Vector2 v1;
@@ -219,7 +220,10 @@ bool Sample::Render()
 			m_pSelectUI->m_PlaneUI.m_cbData.vColor[1] = 0.5f;
 			m_pSelectUI->m_PlaneUI.m_cbData.vColor[2] = 0.5f;
 		}
-		pUI->m_PlaneUI.Render(g_pImmediateContext);
+		if (pUI)
+		{
+			pUI->m_PlaneUI.Render(g_pImmediateContext);
+		}
 	}
 
 	return true;
@@ -232,6 +236,14 @@ bool Sample::Release()
 		pUI->m_PlaneUI.Release();
 	}
 	return true;
+}
+bool Sample::Delete(UIObject* ui)
+{
+	//for(int iUI = 0; iUI < m_vUIList.size(); iUI++)
+	//{
+	//	UIObject* pUI = m_vUIList[iUI];
+	//}
+	SAFE_DEL(ui);	return true;
 }
 
 UIObject* Sample::CreateUI(POINT cursor, STexture* texture)
@@ -319,10 +331,10 @@ UIObject* Sample::SelectUI()
 			SelPoint.x = (((2.0f * SelPoint.x) / g_rtClient.right) - 1) / matProj._11;
 			SelPoint.y = -(((2.0f * SelPoint.y) / g_rtClient.bottom) - 1) / matProj._22;
 
-			pUI->m_rt.left = pUI->m_PlaneUI.m_vPos.x + pUI->m_vUIPos.x - pUI->m_vUIScale.x / 2;
-			pUI->m_rt.top = pUI->m_PlaneUI.m_vPos.y + pUI->m_vUIPos.y - pUI->m_vUIScale.y / 2;
-			pUI->m_rt.right = pUI->m_PlaneUI.m_vPos.x + pUI->m_vUIPos.x + pUI->m_vUIScale.x / 2;
-			pUI->m_rt.bottom = pUI->m_PlaneUI.m_vPos.y + pUI->m_vUIPos.y + pUI->m_vUIScale.y / 2;
+			pUI->m_rt.left = pUI->m_PlaneUI.m_vPos.x + pUI->m_vUIPos.x - pUI->m_vUIScale.x;
+			pUI->m_rt.top = pUI->m_PlaneUI.m_vPos.y + pUI->m_vUIPos.y - pUI->m_vUIScale.y;
+			pUI->m_rt.right = pUI->m_PlaneUI.m_vPos.x + pUI->m_vUIPos.x + pUI->m_vUIScale.x;
+			pUI->m_rt.bottom = pUI->m_PlaneUI.m_vPos.y + pUI->m_vUIPos.y + pUI->m_vUIScale.y;
 
 			if (SelPoint.x > pUI->m_rt.left && SelPoint.x < pUI->m_rt.right &&
 				SelPoint.y > pUI->m_rt.top && SelPoint.y < pUI->m_rt.bottom)
@@ -391,11 +403,13 @@ POINT Sample::MoveDistance()
 
 	return FinalDistance;
 }
-bool Sample::Delete(UIObject* ui)
+Sample::Sample(void)
 {
-	ui->m_PlaneUI.Release();
+	m_pSelectUI = NULL;
+}
+Sample::~Sample(void)
+{
 
-	return true;
 }
 // 도형 삽입, 삭제, 컬러 변경, 텍스쳐 변경, 충돌 처리,
 // 클릭 홀드시 겹친부분 처리

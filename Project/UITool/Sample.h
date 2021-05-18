@@ -33,6 +33,9 @@ public:
 	bool Frame() override;
 	bool Render() override;
 	bool Release() override;
+public:
+	Sample(void);
+	virtual ~Sample(void);
 };
 
 // 렉트 9개 - 마우스로 크기 조정
