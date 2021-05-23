@@ -35,6 +35,7 @@ public:
 	CListBox m_TextureList;
 	afx_msg void TextureFileList();
 	afx_msg void SelectTextureOK();
+	afx_msg void DeleteTextureButton();
 	virtual void OnInitialUpdate();
 };
 

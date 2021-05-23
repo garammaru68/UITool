@@ -37,6 +37,7 @@ void UIToolForm::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(UIToolForm, CFormView)
 	ON_LBN_SELCHANGE(IDC_LIST1, &UIToolForm::TextureFileList)
 	ON_BN_CLICKED(IDC_BUTTON2, &UIToolForm::SelectTextureOK)
+	ON_BN_CLICKED(IDC_BUTTON3, &UIToolForm::DeleteTextureButton)
 END_MESSAGE_MAP()
 
 void UIToolForm::OnInitialUpdate()
@@ -45,7 +46,8 @@ void UIToolForm::OnInitialUpdate()
 
 	m_TextureList.InsertString(0, L"grass_2.jpg");
 	m_TextureList.InsertString(1, L"002.jpg");
-	m_TextureList.InsertString(2, L"main_start_nor.png");
+	m_TextureList.InsertString(2, L"flagstone.bmp");
+	m_TextureList.InsertString(3, L"wal156S.bmp");
 	m_TextureList.SetCurSel(0);
 
 }
@@ -82,6 +84,16 @@ void UIToolForm::SelectTextureOK()
 {
 	UpdateData(FALSE);
 	CUIToolApp* pApp = (CUIToolApp*)AfxGetApp();
-	pApp->m_Sample.m_ChangeTexture = m_Texture;
+	//pApp->m_Sample.m_Texture = m_Texture;
+	pApp->m_Sample.m_pSelectUI->m_PlaneUI.m_pTexture = m_Texture;
+	pApp->m_Sample.m_Texture = NULL;
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+void UIToolForm::DeleteTextureButton()
+{
+	UpdateData(FALSE);
+	CUIToolApp* pApp = (CUIToolApp*)AfxGetApp();
+	pApp->m_Sample.Delete();
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

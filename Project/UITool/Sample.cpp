@@ -16,23 +16,22 @@ bool Sample::Init()
 }
 bool Sample::Frame()
 {
-	POINT cursor;
-	GetCursorPos(&cursor);
-	ScreenToClient(g_hWnd, &cursor);
-
-	UIObject* pSelect = SelectUI();
-
-	// 선택이 바뀌는 과정에서 중복 가능성
-	//if (pSelect != NULL)
-	if (pSelect != NULL && m_pSelectUI != pSelect)
-	{
-		m_pSelectUI = pSelect;
-	}
+	//POINT cursor;
+	//GetCursorPos(&cursor);
+	//ScreenToClient(g_hWnd, &cursor);
 
 	// UI 생성
 	if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
 	{
-		if (!m_Texture == NULL)
+		UIObject* pSelect = SelectUI();
+
+		// 선택이 바뀌는 과정에서 중복 가능성
+		//if (pSelect != NULL)
+		if (pSelect != NULL && m_pSelectUI != pSelect)
+		{
+			m_pSelectUI = pSelect;
+		}
+		if (m_Texture != NULL)
 		{
 			m_vDownPos = ClickDown();
 			//m_pSelectUI = CreateUI(cursor, m_Texture);
@@ -41,12 +40,16 @@ bool Sample::Frame()
 	}
 	if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
 	{
-		if (!m_Texture == NULL)
+		if (m_Texture != NULL)
 		{
 			m_vUpPos = ClickUp();
 
 			Vector2 RectScale;
-			RectScale = (m_vUpPos - m_vDownPos) / 2;
+			// 크기 설정 일단 보류
+			//RectScale = (m_vUpPos - m_vDownPos) / 3;
+			RectScale.x = (m_vUpPos.x - m_vDownPos.x) / 4.35;
+			RectScale.y = (m_vUpPos.y - m_vDownPos.y) / 3.15;
+
 			if (RectScale.x < 0)
 			{
 				(RectScale.x) * (-1.0f);
@@ -57,7 +60,7 @@ bool Sample::Frame()
 			}
 			//RectScale.x = m_vUpPos.x - m_vDownPos.x;
 			//RectScale.y = m_vUpPos.y - m_vDownPos.y;
-			m_pSelectUI = CreateUI(cursor, RectScale, m_Texture);
+			m_pSelectUI = CreateUI(RectScale, m_Texture);
 			m_Texture = NULL;
 		};
 	}
@@ -66,13 +69,14 @@ bool Sample::Frame()
 	{
 		if (m_pSelectUI)
 		{
-			Release();
+			Delete();
 			//Delete(m_pSelectUI);
 		}
 	}
-	// UI 마우스 이동
+	// 마우스 UI 이동 & 마우스 UI 크기
 	if (m_pSelectUI)
 	{
+		// 마우스 UI 이동
 		if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
 		{
 			Matrix matProj = m_pSelectUI->m_PlaneUI.m_matProj;
@@ -96,9 +100,15 @@ bool Sample::Frame()
 			v2.x = (((2.0f * ptDown.x) / g_rtClient.right) - 1) / matProj._11;
 			v2.y = -(((2.0f * ptDown.y) / g_rtClient.bottom) - 1) / matProj._22;
 
+			m_pSelectUI->m_rt.left = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x - m_pSelectUI->m_vUIScale.x;
+			m_pSelectUI->m_rt.top = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y - m_pSelectUI->m_vUIScale.y;
+			m_pSelectUI->m_rt.right = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x + m_pSelectUI->m_vUIScale.x;
+			m_pSelectUI->m_rt.bottom = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y + m_pSelectUI->m_vUIScale.y;
 
-			if (v2.x > m_pSelectUI->m_rt.left && v2.x < m_pSelectUI->m_rt.right &&
-				v2.y > m_pSelectUI->m_rt.top && v2.y < m_pSelectUI->m_rt.bottom)
+			if (v2.x > m_pSelectUI->m_rt.left + 10 &&
+				v2.x < m_pSelectUI->m_rt.right - 10 &&
+				v2.y > m_pSelectUI->m_rt.top + 10 &&
+				v2.y < m_pSelectUI->m_rt.bottom - 10)
 			{
 				POINT cursor;
 				GetCursorPos(&cursor);
@@ -108,10 +118,10 @@ bool Sample::Frame()
 				Vector2 v1;
 				v1.x = (((2.0f * cursor.x) / g_rtClient.right) - 1) / matProj._11;
 				v1.y = -(((2.0f * cursor.y) / g_rtClient.bottom) - 1) / matProj._22;
-				m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x;
-				m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y;
-				//m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x + vUiPos.x;
-				//m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y + vUiPos.y;
+				//m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x;
+				//m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y;
+				m_pSelectUI->m_PlaneUI.m_vPos.x = v1.x + vUiPos.x;
+				m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y + vUiPos.y;
 				m_pSelectUI->m_PlaneUI.m_matWorld._41 = m_pSelectUI->m_PlaneUI.m_vPos.x;
 				m_pSelectUI->m_PlaneUI.m_matWorld._42 = m_pSelectUI->m_PlaneUI.m_vPos.y;
 
@@ -132,13 +142,27 @@ bool Sample::Frame()
 			//m_pSelectUI->m_PlaneUI.m_matWorld._41 = m_pSelectUI->m_PlaneUI.m_vPos.x;
 			//m_pSelectUI->m_PlaneUI.m_matWorld._42 = m_pSelectUI->m_PlaneUI.m_vPos.y;
 		}
-	}
-	if (g_Input.GetKey('F') == KEY_PUSH/* && m_Texture == NULL*/)
-	{
-		m_pSelectUI->m_PlaneUI.m_pTexture = m_Texture;
-		//m_pSelectUI->m_PlaneUI.m_pTexture = m_ChangeTexture;
-		m_Texture = NULL;
-		m_ChangeTexture = NULL;
+		// 사용여부 확인
+		if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
+		{
+			vUiPos.x = 0;
+			vUiPos.y = 0;
+		}
+		// 마우스 UI 크기
+		if (m_pSelectUI->m_rt.left < vUiPos.x &&
+			m_pSelectUI->m_rt.left + 10 > vUiPos.x &&
+			m_pSelectUI->m_rt.top + 10 < vUiPos.y &&
+			m_pSelectUI->m_rt.bottom - 10 > vUiPos.y)
+		{
+
+		}
+		if (g_Input.GetKey('F') == KEY_PUSH/* && m_Texture == NULL*/)
+		{
+			m_pSelectUI->m_PlaneUI.m_pTexture = m_Texture;
+			//m_pSelectUI->m_PlaneUI.m_pTexture = m_ChangeTexture;
+			m_Texture = NULL;
+			m_ChangeTexture = NULL;
+		}
 	}
 
 	// 와이어 프레임
@@ -237,13 +261,17 @@ bool Sample::Release()
 	}
 	return true;
 }
-bool Sample::Delete(UIObject* ui)
+bool Sample::Delete()
 {
-	//for(int iUI = 0; iUI < m_vUIList.size(); iUI++)
-	//{
-	//	UIObject* pUI = m_vUIList[iUI];
-	//}
-	SAFE_DEL(ui);	return true;
+	for(int iUI = 0; iUI < m_vUIList.size(); iUI++)
+	{
+		if (m_pSelectUI == m_vUIList[iUI])
+		{
+			m_vUIList.erase(m_vUIList.begin() + (iUI));
+		}
+	}
+	//SAFE_DEL(ui);	
+	return true;
 }
 
 UIObject* Sample::CreateUI(POINT cursor, STexture* texture)
@@ -277,7 +305,7 @@ UIObject* Sample::CreateUI(POINT cursor, STexture* texture)
 
 	return pUI;
 }
-UIObject* Sample::CreateUI(POINT cursor, Vector2 uiScale, STexture* texture)
+UIObject* Sample::CreateUI(Vector2 uiScale, STexture* texture)
 {
 	UIObject* pUI = new UIObject;
 	pUI->m_PlaneUI.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
@@ -289,8 +317,9 @@ UIObject* Sample::CreateUI(POINT cursor, Vector2 uiScale, STexture* texture)
 
 	Matrix matProj = pUI->m_PlaneUI.m_matProj;
 	Vector2 v;
-	v.x = (((2.0f * cursor.x) / g_rtClient.right) - 1) / matProj._11;
-	v.y = -(((2.0f * cursor.y) / g_rtClient.bottom) - 1) / matProj._22;
+	v.x = (((2.0f * m_vUpPos.x) / g_rtClient.right) - 1) / matProj._11;
+	v.y = -(((2.0f * m_vUpPos.y) / g_rtClient.bottom) - 1) / matProj._22;
+
 	pUI->m_PlaneUI.m_vPos.x = v.x - uiScale.x;
 	pUI->m_PlaneUI.m_vPos.y = v.y + uiScale.y;
 	pUI->m_PlaneUI.m_matWorld._41 = pUI->m_PlaneUI.m_vPos.x;
@@ -323,7 +352,7 @@ UIObject* Sample::SelectUI()
 	for (int select = 0; select < m_vUIList.size(); select++)
 	{
 		UIObject* pUI = m_vUIList[select];
-		if (g_Input.GetKey(VK_LBUTTON) == KEY_HOLD && m_Texture == NULL)
+		if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH && m_Texture == NULL)
 		{
 			POINT SelPoint = cursor;
 			Matrix matProj = pUI->m_PlaneUI.m_matProj;
@@ -415,4 +444,4 @@ Sample::~Sample(void)
 // 클릭 홀드시 겹친부분 처리
 // 9개의 사각형중 중앙에만 이미지 출력하고, 나머지 테투리 사각형 8개는 이미지 크기 작업을 위해 남겨둔다
 
-// 삭제, 컬러 변경, 이미지 크기, 
+// 삭제, 이미지 크기 조절, 텍스쳐 변경

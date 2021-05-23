@@ -18,15 +18,16 @@ public:
 	STexture*					m_ChangeTexture;
 	UIObject*					m_pSelectUI;
 	std::vector<UIObject*>	m_vUIList;
+	std::vector<int>		m_iTest;
 
 public:
 	UIObject*	CreateUI(POINT cursor, STexture* texture);
-	UIObject*	CreateUI(POINT cursor, Vector2 uiScale, STexture* texture);
+	UIObject*	CreateUI(Vector2 uiScale, STexture* texture);
 	UIObject*	SelectUI();
 	Vector2		ClickDown();
 	Vector2		ClickUp();
-	POINT			MoveDistance();
-	bool			Delete(UIObject* ui);
+	POINT		MoveDistance();
+	bool		Delete();
 
 public:
 	bool Init() override;
