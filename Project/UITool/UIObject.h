@@ -1,7 +1,10 @@
 #pragma once
+#include "SCore.h"
+#include "SObject.h"
+#include "SInput.h"
 #include "SShape.h"
 
-class UIObject
+class UIObject : public SObject
 {
 public:
 	SShapeUI m_PlaneUI;
@@ -18,10 +21,12 @@ public:
 
 	RECT		m_rt;
 public:
+	void	SetData(float fLeft);
 	void	Move(float x, float y);
 	void	Scale(float x, float y);
-	bool	Update();
-	bool	matUpdate();
+	void	MouseScale(float x, float y);
+	bool	UpdateSRT();
+	bool	UpdateMat();
 	bool	Save();
 
 public:

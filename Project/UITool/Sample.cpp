@@ -47,8 +47,10 @@ bool Sample::Frame()
 			Vector2 RectScale;
 			// 크기 설정 일단 보류
 			//RectScale = (m_vUpPos - m_vDownPos) / 3;
-			RectScale.x = (m_vUpPos.x - m_vDownPos.x) / 4.35;
-			RectScale.y = (m_vUpPos.y - m_vDownPos.y) / 3.15;
+			RectScale.x = (m_vUpPos.x - m_vDownPos.x) / 2.2;
+			RectScale.y = (m_vUpPos.y - m_vDownPos.y) / 2.1;
+			//RectScale.x = (m_vUpPos.x - m_vDownPos.x) / 4.35;
+			//RectScale.y = (m_vUpPos.y - m_vDownPos.y) / 3.15;
 
 			if (RectScale.x < 0)
 			{
@@ -70,7 +72,6 @@ bool Sample::Frame()
 		if (m_pSelectUI)
 		{
 			Delete();
-			//Delete(m_pSelectUI);
 		}
 	}
 	// 마우스 UI 이동 & 마우스 UI 크기
@@ -143,19 +144,45 @@ bool Sample::Frame()
 			//m_pSelectUI->m_PlaneUI.m_matWorld._42 = m_pSelectUI->m_PlaneUI.m_vPos.y;
 		}
 		// 사용여부 확인
-		if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
-		{
-			vUiPos.x = 0;
-			vUiPos.y = 0;
-		}
-		// 마우스 UI 크기
-		if (m_pSelectUI->m_rt.left < vUiPos.x &&
-			m_pSelectUI->m_rt.left + 10 > vUiPos.x &&
-			m_pSelectUI->m_rt.top + 10 < vUiPos.y &&
-			m_pSelectUI->m_rt.bottom - 10 > vUiPos.y)
-		{
+		//if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
+		//{
+		//	vUiPos.x = 0;
+		//	vUiPos.y = 0;
+		//}
 
-		}
+		// 마우스 UI 크기
+		//if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
+		//{
+		//	POINT ptCheck;
+		//	GetCursorPos(&ptCheck);
+		//	ScreenToClient(g_hWnd, &ptCheck);
+
+		//	Matrix matProj = m_pSelectUI->m_PlaneUI.m_matProj;
+		//	ptCheck.x = (((2.0f * ptCheck.x) / g_rtClient.right) - 1) / matProj._11;
+		//	ptCheck.y = -(((2.0f * ptCheck.y) / g_rtClient.bottom) - 1) / matProj._22;
+		//}
+		//if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
+		//{
+		//	m_vUpScale = ClickUp();
+		//}
+
+		//if (m_pSelectUI->m_rt.left < m_vDownScale.x &&
+		//	m_pSelectUI->m_rt.left + 10 > m_vDownScale.x &&
+		//	m_pSelectUI->m_rt.top + 10 < m_vDownScale.y &&
+		//	m_pSelectUI->m_rt.bottom - 10 > m_vDownScale.y)
+		//{
+		//	if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
+		//	{
+		//		m_vDownScale = ClickDown();
+
+		//		Matrix matProj = m_pSelectUI->m_PlaneUI.m_matProj;
+		//		m_vUiScale.x = (((2.0f * m_vUiScale.x) / g_rtClient.right) - 1) / matProj._11;
+		//		m_vUiScale.y = -(((2.0f * m_vUiScale.y) / g_rtClient.bottom) - 1) / matProj._22;
+		//	}
+		//	m_pSelectUI->m_matWorld._11 = m_pSelectUI->m_matWorld._11 + m_vUiScale.x;
+		//	m_pSelectUI->m_matWorld._22 = m_pSelectUI->m_matWorld._22 + m_vUiScale.y;
+		//}
+		/////////////////////////////////////////////
 		if (g_Input.GetKey('F') == KEY_PUSH/* && m_Texture == NULL*/)
 		{
 			m_pSelectUI->m_PlaneUI.m_pTexture = m_Texture;
@@ -166,7 +193,7 @@ bool Sample::Frame()
 	}
 
 	// 와이어 프레임
-	if (g_Input.GetKey('1') == KEY_PUSH)
+	if (g_Input.GetKey('0') == KEY_PUSH)
 	{
 		m_bRS = !m_bRS;
 	}
@@ -196,7 +223,33 @@ bool Sample::Frame()
 		//m_pSelectUI->Move(vUIPos.x + UIPosMouse.x, vUIPos.y + UIPosMouse.y);
 
 		// Scale
+		// rt.left,top,right,bottom을 마우스 위치에 맞춘다
+
 		Vector2 vUIScale;
+		// rt1
+		if (m_pSelectUI->m_rt.left < m_vDownScale.x &&
+			m_pSelectUI->m_rt.left + 10 > m_vDownScale.x &&
+			m_pSelectUI->m_rt.top < m_vDownScale.y &&
+			m_pSelectUI->m_rt.top + 10 > m_vDownScale.y)
+		{
+
+		}
+		// rt4
+		if (m_pSelectUI->m_rt.left < m_vDownScale.x &&
+			m_pSelectUI->m_rt.left + 10 > m_vDownScale.x &&
+			m_pSelectUI->m_rt.top + 10 < m_vDownScale.y &&
+			m_pSelectUI->m_rt.bottom - 10 > m_vDownScale.y)
+		{
+			if (g_Input.GetKey(VK_LBUTTON) == KEY_HOLD)
+			{
+				POINT ptCursor;
+				GetCursorPos(&ptCursor);
+				ScreenToClient(g_hWnd, &ptCursor);
+				vUIScale.x = ptCursor.x;
+				vUIScale.y = ptCursor.y;
+				//vUIScale.x = ptCursor.x + m_pSelectUI->m_vPos.x;
+			}
+		}
 		if (g_Input.GetKey('Q') == KEY_HOLD)
 		{
 			vUIScale.x += 40.0f * g_fSecondPerFrame;
@@ -213,19 +266,21 @@ bool Sample::Frame()
 		{
 			vUIScale.y -= 40.0f * g_fSecondPerFrame;
 		}
+		//m_pSelectUI->MouseScale(vUIScale.x, vUIScale.y);
 		m_pSelectUI->Scale(vUIScale.x, vUIScale.y);
 	}
 
 	for (int iUI = 0; iUI < m_vUIList.size(); iUI++)
 	{
 		UIObject* pUI = m_vUIList[iUI];
-		pUI->Update();
+		pUI->UpdateSRT();
 	}
 
 	return true;
 }
 bool Sample::Render()
 {
+	DX::ApplyBS(g_pImmediateContext, DX::SDxState::g_pAlphaBlend);
 
 	if (m_bRS)
 	{
@@ -274,40 +329,41 @@ bool Sample::Delete()
 	return true;
 }
 
-UIObject* Sample::CreateUI(POINT cursor, STexture* texture)
-{
-	UIObject* pUI = new UIObject;
-	pUI->m_PlaneUI.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
-		L"../../data/shader/PS.txt", L"../../data/tileA.jpg");
-	pUI->m_PlaneUI.m_pTexture = texture;
-
-	pUI->m_PlaneUI.m_matView = m_pMainCamera->m_matView;
-	pUI->m_PlaneUI.m_matProj = m_pMainCamera->m_matProj;
-
-	Matrix matProj = pUI->m_PlaneUI.m_matProj;
-	Vector2 v;
-	v.x = (((2.0f * cursor.x) / g_rtClient.right) - 1) / matProj._11;
-	v.y = -(((2.0f * cursor.y) / g_rtClient.bottom) - 1) / matProj._22;
-	pUI->m_PlaneUI.m_vPos.x = v.x;
-	pUI->m_PlaneUI.m_vPos.y = v.y;
-	pUI->m_PlaneUI.m_matWorld._41 = pUI->m_PlaneUI.m_vPos.x;
-	pUI->m_PlaneUI.m_matWorld._42 = pUI->m_PlaneUI.m_vPos.y;
-
-	//pUI->m_vUIScale.x = pUI->m_PlaneUI.m_rtSrc.right - pUI->m_PlaneUI.m_rtSrc.left;
-	//pUI->m_vUIScale.y = pUI->m_PlaneUI.m_rtSrc.bottom - pUI->m_PlaneUI.m_rtSrc.top;
-	pUI->m_vUIScale.x = 100.0f;
-	pUI->m_vUIScale.y = 100.0f;
-
-	pUI->Update();
-	pUI->matUpdate();
-
-	m_vUIList.push_back(pUI);
-
-	return pUI;
-}
+//UIObject* Sample::CreateUI(POINT cursor, STexture* texture)
+//{
+//	UIObject* pUI = new UIObject;
+//	pUI->m_PlaneUI.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
+//		L"../../data/shader/PS.txt", L"../../data/tileA.jpg");
+//	pUI->m_PlaneUI.m_pTexture = texture;
+//
+//	pUI->m_PlaneUI.m_matView = m_pMainCamera->m_matView;
+//	pUI->m_PlaneUI.m_matProj = m_pMainCamera->m_matProj;
+//
+//	Matrix matProj = pUI->m_PlaneUI.m_matProj;
+//	Vector2 v;
+//	v.x = (((2.0f * cursor.x) / g_rtClient.right) - 1) / matProj._11;
+//	v.y = -(((2.0f * cursor.y) / g_rtClient.bottom) - 1) / matProj._22;
+//	pUI->m_PlaneUI.m_vPos.x = v.x;
+//	pUI->m_PlaneUI.m_vPos.y = v.y;
+//	pUI->m_PlaneUI.m_matWorld._41 = pUI->m_PlaneUI.m_vPos.x;
+//	pUI->m_PlaneUI.m_matWorld._42 = pUI->m_PlaneUI.m_vPos.y;
+//
+//	//pUI->m_vUIScale.x = pUI->m_PlaneUI.m_rtSrc.right - pUI->m_PlaneUI.m_rtSrc.left;
+//	//pUI->m_vUIScale.y = pUI->m_PlaneUI.m_rtSrc.bottom - pUI->m_PlaneUI.m_rtSrc.top;
+//	pUI->m_vUIScale.x = 100.0f;
+//	pUI->m_vUIScale.y = 100.0f;
+//
+//	pUI->UpdateSRT();
+//	pUI->UpdateMat();
+//
+//	m_vUIList.push_back(pUI);
+//
+//	return pUI;
+//}
 UIObject* Sample::CreateUI(Vector2 uiScale, STexture* texture)
 {
 	UIObject* pUI = new UIObject;
+	pUI->SetData(m_fLeft);
 	pUI->m_PlaneUI.Create(g_pd3dDevice, L"../../data/shader/VS.txt",
 		L"../../data/shader/PS.txt", L"../../data/tileA.jpg");
 	pUI->m_PlaneUI.m_pTexture = texture;
@@ -325,13 +381,11 @@ UIObject* Sample::CreateUI(Vector2 uiScale, STexture* texture)
 	pUI->m_PlaneUI.m_matWorld._41 = pUI->m_PlaneUI.m_vPos.x;
 	pUI->m_PlaneUI.m_matWorld._42 = pUI->m_PlaneUI.m_vPos.y;
 
-	//pUI->m_vUIScale.x = pUI->m_PlaneUI.m_rtSrc.right - pUI->m_PlaneUI.m_rtSrc.left;
-	//pUI->m_vUIScale.y = pUI->m_PlaneUI.m_rtSrc.bottom - pUI->m_PlaneUI.m_rtSrc.top;
 	pUI->m_vUIScale.x = uiScale.x;
 	pUI->m_vUIScale.y = uiScale.y;
 
-	pUI->Update();
-	pUI->matUpdate();
+	pUI->UpdateSRT();
+	pUI->UpdateMat();
 
 	m_vUIList.push_back(pUI);
 

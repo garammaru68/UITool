@@ -8,20 +8,23 @@ class Sample : public SCore
 public:
 	bool		m_bRS;
 	bool		m_bClickState;
+	float		m_fLeft;
 	POINT		sCursorPos;
 	POINT		eCursorPos;
-	Vector2	vUiPos;
 	Vector2	v2;
+	Vector2	vUiPos;
 	Vector2	m_vDownPos;
 	Vector2	m_vUpPos;
+	Vector2	m_vUiScale;
+	Vector2	m_vDownScale;
+	Vector2	m_vUpScale;
 	STexture*					m_Texture;
 	STexture*					m_ChangeTexture;
 	UIObject*					m_pSelectUI;
 	std::vector<UIObject*>	m_vUIList;
-	std::vector<int>		m_iTest;
 
 public:
-	UIObject*	CreateUI(POINT cursor, STexture* texture);
+	//UIObject*	CreateUI(POINT cursor, STexture* texture);
 	UIObject*	CreateUI(Vector2 uiScale, STexture* texture);
 	UIObject*	SelectUI();
 	Vector2		ClickDown();

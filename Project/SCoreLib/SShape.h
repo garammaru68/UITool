@@ -20,6 +20,10 @@ public:
 class SShapeUI : public SShape
 {
 public:
+	float fLeft;
+	float fUV1;
+	float fUV2;
+public:
 	virtual bool	CreateVertexData()override;
 	virtual bool	CreateIndexData()override;
 public:

@@ -10,7 +10,8 @@ class UIToolForm : public CFormView
 	DECLARE_DYNCREATE(UIToolForm)
 public:
 	static UIToolForm* CreateOnce(CWnd* pParent);
-	STexture*		m_Texture;
+	STexture*	m_Texture;
+	float			m_fRectSize;
 protected:
 	UIToolForm();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~UIToolForm();
@@ -37,6 +38,9 @@ public:
 	afx_msg void SelectTextureOK();
 	afx_msg void DeleteTextureButton();
 	virtual void OnInitialUpdate();
+	afx_msg void RectScaleEdit();
+	afx_msg void SaveButton();
+	afx_msg void LoadButton();
 };
 
 
