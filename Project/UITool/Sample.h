@@ -16,8 +16,8 @@ public:
 	Vector2	m_vDownPos;
 	Vector2	m_vUpPos;
 	Vector2	m_vUiScale;
-	Vector2	m_vDownScale;
-	Vector2	m_vUpScale;
+	POINT		m_ptDownScale;
+	POINT		m_ptUpScale;
 	STexture*					m_Texture;
 	STexture*					m_ChangeTexture;
 	UIObject*					m_pSelectUI;

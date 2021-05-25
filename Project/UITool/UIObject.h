@@ -20,6 +20,7 @@ public:
 	float		m_fSpeed = 100.0f;
 
 	RECT		m_rt;
+	RECT		m_rtUI;
 public:
 	void	SetData(float fLeft);
 	void	Move(float x, float y);

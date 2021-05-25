@@ -225,29 +225,44 @@ bool Sample::Frame()
 		// Scale
 		// rt.left,top,right,bottom을 마우스 위치에 맞춘다
 
+		// 마우스 크기
 		Vector2 vUIScale;
-		// rt1
-		if (m_pSelectUI->m_rt.left < m_vDownScale.x &&
-			m_pSelectUI->m_rt.left + 10 > m_vDownScale.x &&
-			m_pSelectUI->m_rt.top < m_vDownScale.y &&
-			m_pSelectUI->m_rt.top + 10 > m_vDownScale.y)
+		
+		if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
 		{
+			GetCursorPos(&m_ptDownScale);
+			ScreenToClient(g_hWnd, &m_ptDownScale);
 
+			Matrix matProj = m_pSelectUI->m_PlaneUI.m_matProj;
+			m_ptDownScale.x = (((2.0f * m_ptDownScale.x) / g_rtClient.right) - 1) / matProj._11;
+			m_ptDownScale.y = (((2.0f * m_ptDownScale.y) / g_rtClient.bottom) - 1) / matProj._22;
+		}
+		// rt1
+		if (m_pSelectUI->m_rt.left < m_ptDownScale.x &&
+			m_pSelectUI->m_rt.left + 10 > m_ptDownScale.x &&
+			m_pSelectUI->m_rt.top < m_ptDownScale.y &&
+			m_pSelectUI->m_rt.top + 10 > m_ptDownScale.y)
+		{
+			
 		}
 		// rt4
-		if (m_pSelectUI->m_rt.left < m_vDownScale.x &&
-			m_pSelectUI->m_rt.left + 10 > m_vDownScale.x &&
-			m_pSelectUI->m_rt.top + 10 < m_vDownScale.y &&
-			m_pSelectUI->m_rt.bottom - 10 > m_vDownScale.y)
+		if (m_pSelectUI->m_rt.left < m_ptDownScale.x &&
+			m_pSelectUI->m_rt.left + 10 > m_ptDownScale.x &&
+			m_pSelectUI->m_rt.top + 10 < m_ptDownScale.y &&
+			m_pSelectUI->m_rt.bottom - 10 > m_ptDownScale.y)
 		{
+
 			if (g_Input.GetKey(VK_LBUTTON) == KEY_HOLD)
 			{
 				POINT ptCursor;
 				GetCursorPos(&ptCursor);
 				ScreenToClient(g_hWnd, &ptCursor);
-				vUIScale.x = ptCursor.x;
-				vUIScale.y = ptCursor.y;
+				vUIScale.x += ptCursor.x - m_ptDownScale.x;
+				vUIScale.y += ptCursor.y - m_ptDownScale.y;
+
 				//vUIScale.x = ptCursor.x + m_pSelectUI->m_vPos.x;
+				//vUIScale.x += 40.0f * g_fSecondPerFrame;
+
 			}
 		}
 		if (g_Input.GetKey('Q') == KEY_HOLD)
