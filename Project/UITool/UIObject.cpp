@@ -33,8 +33,8 @@ void UIObject::Scale(float x, float y)
 }
 void UIObject::MouseScale(float x, float y)
 {
-	m_vUIScale.x = x;
-	m_vUIScale.y = y;
+	m_vUIScale.x = m_vUIScale.x + x;
+	m_vUIScale.y = m_vUIScale.y + y;
 }
 bool UIObject::UpdateSRT()
 {

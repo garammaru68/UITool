@@ -8,6 +8,7 @@ class Sample : public SCore
 public:
 	bool		m_bRS;
 	bool		m_bClickState;
+	bool		m_bClickScaleRange;
 	float		m_fLeft;
 	POINT		sCursorPos;
 	POINT		eCursorPos;
@@ -16,6 +17,7 @@ public:
 	Vector2	m_vDownPos;
 	Vector2	m_vUpPos;
 	Vector2	m_vUiScale;
+	POINT		m_ptDown;
 	POINT		m_ptDownScale;
 	POINT		m_ptUpScale;
 	STexture*					m_Texture;
