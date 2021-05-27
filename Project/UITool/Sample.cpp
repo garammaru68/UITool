@@ -22,6 +22,7 @@ bool Sample::Frame()
 	//ScreenToClient(g_hWnd, &cursor);
 
 	// UI 생성
+	// Tool 창 크기에 따라 생성 위치,크기가 달라짐
 	if (g_Input.GetKey(VK_LBUTTON) == KEY_PUSH)
 	{
 		UIObject* pSelect = SelectUI();
@@ -125,9 +126,10 @@ bool Sample::Frame()
 				m_pSelectUI->m_PlaneUI.m_vPos.y = v1.y + vUiPos.y;
 				m_pSelectUI->m_PlaneUI.m_matWorld._41 = m_pSelectUI->m_PlaneUI.m_vPos.x;
 				m_pSelectUI->m_PlaneUI.m_matWorld._42 = m_pSelectUI->m_PlaneUI.m_vPos.y;
-
 			}
 		}
+		// 7월 2일 언리얼 개인 작품
+
 		// 사용여부 확인
 		//if (g_Input.GetKey(VK_LBUTTON) == KEY_UP)
 		//{
@@ -230,26 +232,28 @@ bool Sample::Frame()
 		{
 			m_bClickScaleRange = false;
 		}
-		// rt1
-		if (m_pSelectUI->m_rt.left < m_ptDownScale.x &&
-			m_pSelectUI->m_rt.left + 10 > m_ptDownScale.x &&
-			m_pSelectUI->m_rt.top < m_ptDownScale.y &&
-			m_pSelectUI->m_rt.top + 10 > m_ptDownScale.y)
-		{
-			
-		}
-		//rt4
 		if (g_Input.GetKey(VK_LBUTTON) == KEY_HOLD)
 		{
-			m_pSelectUI->m_rt.left = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x - m_pSelectUI->m_vUIScale.x;
-			m_pSelectUI->m_rt.top = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y - m_pSelectUI->m_vUIScale.y;
-			m_pSelectUI->m_rt.right = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIPos.x + m_pSelectUI->m_vUIScale.x;
-			m_pSelectUI->m_rt.bottom = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIPos.y + m_pSelectUI->m_vUIScale.y;
+			m_pSelectUI->m_rt.left = m_pSelectUI->m_PlaneUI.m_vPos.x - m_pSelectUI->m_vUIScale.x;
+			m_pSelectUI->m_rt.top = m_pSelectUI->m_PlaneUI.m_vPos.y - m_pSelectUI->m_vUIScale.y;
+			m_pSelectUI->m_rt.right = m_pSelectUI->m_PlaneUI.m_vPos.x + m_pSelectUI->m_vUIScale.x;
+			m_pSelectUI->m_rt.bottom = m_pSelectUI->m_PlaneUI.m_vPos.y + m_pSelectUI->m_vUIScale.y;
 
 			POINT ptHold;
 			GetCursorPos(&ptHold);
 			ScreenToClient(g_hWnd, &ptHold);
 
+			// rt1
+			if (m_pSelectUI->m_rt.left < m_ptDownScale.x &&
+				m_pSelectUI->m_rt.left + 10 > m_ptDownScale.x &&
+				m_pSelectUI->m_rt.top < m_ptDownScale.y &&
+				m_pSelectUI->m_rt.top + 10 > m_ptDownScale.y)
+			{
+				m_vDownPos = ClickDown();
+				
+			}
+
+			//rt4
 			//if (m_pSelectUI->m_rt.left < ptHold.x &&
 			//	m_pSelectUI->m_rt.left + 10 > ptHold.x &&
 			//	m_pSelectUI->m_rt.top + 10 < ptHold.y &&
@@ -366,11 +370,6 @@ bool Sample::Render()
 }
 bool Sample::Release()
 {
-	for (int iUI = 0; iUI < m_vUIList.size(); iUI++)
-	{
-		UIObject* pUI = m_vUIList[iUI];
-		pUI->m_PlaneUI.Release();
-	}
 	return true;
 }
 bool Sample::Delete()
